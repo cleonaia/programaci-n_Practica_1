@@ -27,3 +27,21 @@ def MissatgeRPSLS(player1, player2):
         print(missatges[(player2, player1)])
     else:
         print("Empat!")
+
+
+def JocRPSLS(player1, player2):
+    if player1 == player2:
+        return 0  
+    
+    guanyadors = {
+        ROCK: [SCISSORS, LIZARD],
+        PAPER: [ROCK, SPOCK],
+        SCISSORS: [PAPER, LIZARD],
+        LIZARD: [SPOCK, PAPER],
+        SPOCK: [SCISSORS, ROCK],
+    }
+    
+    if player2 in guanyadors[player1]:
+        return 1
+    else:
+        return 2
