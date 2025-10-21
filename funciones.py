@@ -84,3 +84,8 @@ def JocRPSLS(player1, player2):
         return 1
     else:
         return 2
+PresentacioJoc()
+import random
+player1 = int(input("Introdueix el teu nom: "))
+player2 = int(input("Introdueix el teu nom: "))
+random.seed(<player1>)
