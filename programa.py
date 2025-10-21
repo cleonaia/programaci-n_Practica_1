@@ -7,11 +7,12 @@ LIZARD = 4
 SPOCK = 5
 
 def PresentacioJoc():
-    print("Pedra, paper, tisores, llangardaix, Spock és un joc d'atzar ampliació del popular Pedra, paper, tisores. Creat per Sam Kass amb Karen Bryla http://www.samkass.com/theories/RPSSL.html. " \
-    "Popularitzat per Sheldon Cooper a la sèrie Big Bang Theory. " \
-    "Es fa servir per solucionar una disputa entre Sheldon i Raj en el capítol The Lizard - Spock Expansion. " \
-    "" \
-    "El joc és al millor de N partides on N és un nombre senar ")
+    print("Pedra, paper, tisores, llangardaix, Spock és un joc d'atzar ampliació del popular Pedra, paper, tisores. "
+    print("Creat per Sam Kass amb Karen Bryla http://www.samkass.com/theories/RPSSL.html. ")
+    print("Popularitzat per Sheldon Cooper a la sèrie Big Bang Theory. ")
+    print("Es fa servir per solucionar una disputa entre Sheldon i Raj en el capítol The Lizard - Spock Expansion. ")
+    print("")
+    print("El joc és al millor de N partides on N és un nombre senar ")
 
 def Senar(num):
     return False if num%2 == 0 else (num % 2 != 0)
