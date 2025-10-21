@@ -7,25 +7,29 @@ LIZARD = 4
 SPOCK = 5
 
 def PresentacioJoc():
-    print("Pedra, paper, tisores, llangardaix, Spock és un joc d'atzar ampliació del popular Pedra, paper, tisores. "
-    print("Creat per Sam Kass amb Karen Bryla http://www.samkass.com/theories/RPSSL.html. ")
-    print("Popularitzat per Sheldon Cooper a la sèrie Big Bang Theory. ")
-    print("Es fa servir per solucionar una disputa entre Sheldon i Raj en el capítol The Lizard - Spock Expansion. ")
+    print("Pedra, paper, tisores, llangardaix, Spock és un joc d'atzar ampliació del popular Pedra, paper, tisores")
+    print("Creat per Sam Kass amb Karen Bryla")
+    print("http://www.samkass.com/theories/RPSSL.html")
+    print("Popularitzat per Sheldon Cooper a la sèrie Big Bang Theory.")
+    print("Es fa servir per solucionar una disputa entre Sheldon i Raj en el capítol The Lizard - Spock Expansion")
     print("")
-    print("El joc és al millor de N partides on N és un nombre senar ")
+    print("El joc és al millor de N partides on N és un nombre senar")
 
 def Senar(num):
-    return False if num%2 == 0 else (num % 2 != 0)
+    if num == 0:
+        return False
+    return num % 2 != 0
 
 def LlegirSenar():
     while True:
-        num = int(input("Introduir un nombre senar: "))
+        try:
+            num = int(input("Introduir un nombre senar: "))
+        except ValueError:
+            print("ERROR: Entrada no vàlida")
         if Senar(num):
             return num
         else:
             print("ERROR: El nombre introduït és parell")
-    num = int(input("Introduir un nombre senar: "))
-    Senar(num)
 
 def MenuRPSLS():
     print("1. Pedra")
@@ -35,14 +39,15 @@ def MenuRPSLS():
     print("5. Spock")
 
 def LlegirNombre(minim, maxim):
-    maxim = 5
-    minim = 1
-    if minim < maxim:
-        entrada = int(input(f"Entra valor entre {minim} i {maxim}: "))
-        return entrada
-    else:
-        print("ERROR: Valor fora de l'interval ")
-        LlegirNombre(minim,maxim)
+    while True:
+        try:
+            entrada = int(input(f"Entra valor entre {minim} i {maxim}: "))
+        except ValueError:
+            print("ERROR: Entrada no vàlida")
+        if minim <= entrada <= maxim:
+            return entrada
+        else:
+            print("ERROR: Valor fora de l'interval")
         
 def JocRPSLS(player1, player2):
     if player1 == player2:
@@ -84,54 +89,45 @@ def MissatgeRPSLS(player1, player2):
     else:
         print("Empat!")
 
-def _figura_nom(x):
-    noms = {
-        ROCK: "Pedra",
-        PAPER: "Paper",
-        SCISSORS: "Tisores",
-        LIZARD: "Llangardaix",
-        SPOCK: "Spock"
-    }
-    return noms.get(x, "Desconegut")
+PresentacioJoc()
+nom_jugador = input("Introdueix el teu nom: ")
+random.seed(nom_jugador)
+total_partides = LlegirSenar()
+guanys_necessaris = total_partides // 2 + 1
+guanys_sheldon = 0
+guanys_jugador = 0
+llista_sheldon = []
+llista_jugador = []
 
-def main():
-    PresentacioJoc()
-    player1 = input("Introdueix el teu nom: ")
-    random.seed(player1)
-    total_partides = LlegirSenar()
-    guanys_necessaris = total_partides // 2 + 1
-    guanys_sheldon = 0
-    guanys_jugador = 0
-    llista_sheldon = []
-    llista_jugador = []
-    opcions = ["Pedra", "Paper", "Tisores", "Llangardaix", "Spock"]
-    while guanys_sheldon < guanys_necessaris and guanys_jugador < guanys_necessaris:
-        sheldon_choice = random.randint(1, 5)
-        MenuRPSLS()
-        player_choice = LlegirNombre(1, 5)
-        resultat = JocRPSLS(player_choice, sheldon_choice)
-        MissatgeRPSLS(player_choice, sheldon_choice)
-        llista_sheldon.append(sheldon_choice)
-        llista_jugador.append(player_choice)
-        figures_sheldon = [opcions[i-1] for i in llista_sheldon]
-        figures_jugador = [opcions[i-1] for i in llista_jugador]
-        
-        if resultat == 2:
-            guanys_sheldon += 1
-            print("Guanya Sheldon Cooper!!!")
-        elif resultat == 1:
-            guanys_jugador += 1
-            print(f"Guanya {player1}!!!")
-        else:
-            pass
+opcions = ["Pedra", "Paper", "Tisores", "Llangardaix", "Spock"]
 
-        print(f"MARCADOR -- Sheldon {guanys_sheldon} {player1} {guanys_jugador}")
-
-    if guanys_sheldon >= guanys_necessaris:
-        print("El guanyador és Sheldon")
+while guanys_sheldon < guanys_necessaris and guanys_jugador < guanys_necessaris:
+    sheldon_choice = random.randint(1, 5)
+    MenuRPSLS()
+    player_choice = LlegirNombre(1, 5)
+    resultat = JocRPSLS(player_choice, sheldon_choice)
+    MissatgeRPSLS(player_choice, sheldon_choice)
+    llista_sheldon.append(sheldon_choice)
+    llista_jugador.append(player_choice)
+    
+    if resultat == 2:
+        guanys_sheldon += 1
+        print("Guanya Sheldon Cooper!!!")
+    elif resultat == 1:
+        guanys_jugador += 1
+        print(f"Guanya {nom_jugador}!!!")
     else:
-        print(f"El guanyador és {player1}")
+        pass
 
-    print("Figures Sheldon:", figures_sheldon)
-    print(f"Figures {player1}:", figures_jugador)
-main()
+print(f"MARCADOR -- Sheldon {guanys_sheldon} {nom_jugador} {guanys_jugador}")
+
+if guanys_sheldon >= guanys_necessaris:
+    print("El guanyador és Sheldon")
+else:
+    print(f"El guanyador és {nom_jugador}")
+
+figures_sheldon = [opcions[i-1] for i in llista_sheldon]
+figures_jugador = [opcions[i-1] for i in llista_jugador]
+
+print("Figures Sheldon:", figures_sheldon)
+print(f"Figures {nom_jugador}:", figures_jugador)
