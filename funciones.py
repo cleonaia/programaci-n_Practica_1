@@ -11,24 +11,18 @@ def PresentacioJoc():
     "El joc és al millor de N partides on N és un nombre senar ")
 
 def Senar(num):
-    if num %2 != 0:
-        senar = True
-    else:
-        senar = False
-    return senar
+    return num % 2 == 1 if num != 0 else False
 
 def LlegirSenar():
-    num = int(input("Introduir un nombre senar: "))
-    Senar(num)
-    if senar == True:
-        return num
-    else:
-        while senar != True:
-            print("ERROR: El nombre introduït és parell")
+    while True:
+        try:
             num = int(input("Introduir un nombre senar: "))
-            Senar(num)
-            if senar == True:
+            if Senar(num):
                 return num
+            else:
+                print("ERROR: El nombre introduït és parell")
+        except ValueError:
+            print("ERROR: El nombre introduït no és vàlid")
 
 def MenuRPSLS():
     print("Selecciona una opció:")
